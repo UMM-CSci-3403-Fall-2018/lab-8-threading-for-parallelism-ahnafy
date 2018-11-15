@@ -4,8 +4,11 @@ public class ThreadedMinimumPairwiseDistance implements MinimumPairwiseDistance 
     private long globalResult = Integer.MAX_VALUE;
 
     @Override
-    public long minimumPairwiseDistance(int[] values) {
+    public long minimumPairwiseDistance(int[] values) 
+    // Arrays are created here of threads
+    {
         Thread[] threads = new Thread[4];
+    // Start threading in each of the runnables
         for(int i = 0; i < 4; i++){
             switch(i){
                 case 0 :
@@ -23,6 +26,7 @@ public class ThreadedMinimumPairwiseDistance implements MinimumPairwiseDistance 
             }
             threads[i].start();
         }
+        // Join thread
         for(int i = 0; i < 4; i++){
             try {
                 threads[i].join();
@@ -47,7 +51,9 @@ public class ThreadedMinimumPairwiseDistance implements MinimumPairwiseDistance 
         public void run(){
             long result = Integer.MAX_VALUE;
             for (int i = 0; i < values.length/2; ++i) {
-                for (int j = 0; j < i; ++j) {
+                for (int j = 0; j < i; ++j)
+         // Pairs (i, j) where 0 <= j < i < values.length/2
+                {
                     long diff = Math.abs(values[i] - values[j]);
                     if (diff < result) {
                         result = diff;
@@ -67,7 +73,9 @@ public class ThreadedMinimumPairwiseDistance implements MinimumPairwiseDistance 
         public void run(){
             long result = Integer.MAX_VALUE;
             for (int i = values.length/2; i < values.length; ++i) {
-                for (int j = 0; j < i - (values.length/2); ++j) {
+                for (int j = 0; j < i - (values.length/2); ++j)
+                // Pairs (i, j) where values.length/2 <= j + values.length/2 < i < values.length
+                {
                     long diff = Math.abs(values[i] - values[j]);
                     if (diff < result) {
                         result = diff;
@@ -87,7 +95,9 @@ public class ThreadedMinimumPairwiseDistance implements MinimumPairwiseDistance 
         public void run(){
             long result = Integer.MAX_VALUE;
             for (int i = values.length/2; i < values.length; ++i) {
-                for (int j = i - (values.length/2); j < i; ++j) {
+                for (int j = i - (values.length/2); j < i; ++j) 
+                // Pairs (i, j) where values.length/2 <= i <= j + values.length/2 < values.length
+                {
                     long diff = Math.abs(values[i] - values[j]);
                     if (diff < result) {
                         result = diff;
@@ -107,7 +117,9 @@ public class ThreadedMinimumPairwiseDistance implements MinimumPairwiseDistance 
         public void run(){
             long result = Integer.MAX_VALUE;
             for (int i = values.length/2; i < values.length; ++i) {
-                for (int j = values.length/2; j < i; ++j) {
+                for (int j = values.length/2; j < i; ++j) 
+          // Pairs (i, j) where values.length/2 <= j < i < values.length
+                {
                     long diff = Math.abs(values[i] - values[j]);
                     if (diff < result) {
                         result = diff;
