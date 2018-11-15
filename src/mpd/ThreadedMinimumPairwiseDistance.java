@@ -1,7 +1,7 @@
 package mpd;
 
 public class ThreadedMinimumPairwiseDistance implements MinimumPairwiseDistance {
-    private long globalResult = Integer.MAX_VALUE;
+    private long result = Integer.MAX_VALUE;
 
     @Override
     public long minimumPairwiseDistance(int[] values) 
@@ -34,12 +34,12 @@ public class ThreadedMinimumPairwiseDistance implements MinimumPairwiseDistance 
                 e.printStackTrace();
             }
         }
-        return this.globalResult;
+        return this.result;
     }
 
-    public void updateGlobalResult(long localResult){
-        if(this.globalResult > localResult){
-            this.globalResult = localResult;
+    public void updateResult(long localResult){
+        if(this.result > localResult){
+            this.result = localResult;
         }
     }
 
@@ -60,7 +60,7 @@ public class ThreadedMinimumPairwiseDistance implements MinimumPairwiseDistance 
                     }
                 }
             }
-            updateGlobalResult(result);
+            updateResult(result);
         }
     }
 
@@ -82,7 +82,7 @@ public class ThreadedMinimumPairwiseDistance implements MinimumPairwiseDistance 
                     }
                 }
             }
-            updateGlobalResult(result);
+            updateResult(result);
         }
     }
 
@@ -104,7 +104,7 @@ public class ThreadedMinimumPairwiseDistance implements MinimumPairwiseDistance 
                     }
                 }
             }
-            updateGlobalResult(result);
+            updateResult(result);
         }
     }
 
@@ -126,7 +126,7 @@ public class ThreadedMinimumPairwiseDistance implements MinimumPairwiseDistance 
                     }
                 }
             }
-            updateGlobalResult(result);
+            updateResult(result);
         }
     }
 
