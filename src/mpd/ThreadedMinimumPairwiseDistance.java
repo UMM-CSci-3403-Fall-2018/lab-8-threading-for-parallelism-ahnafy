@@ -2,7 +2,6 @@ package mpd;
 
 public class ThreadedMinimumPairwiseDistance implements MinimumPairwiseDistance {
     private long globalResult = Integer.MAX_VALUE;
-
     @Override
     public long minimumPairwiseDistance(int[] values) {
         Thread[] threads = new Thread[4];
@@ -82,7 +81,6 @@ public class ThreadedMinimumPairwiseDistance implements MinimumPairwiseDistance 
             long result = Integer.MAX_VALUE;
             for (int i = values.length/2; i < values.length; ++i) {
                 for (int j = values.length/2; j <= i; ++j) {
-                    // Gives us all the pairs (i, j) where 0 <= j < i < values.length
                     long diff = Math.abs(values[j] - values[i]);
                     if (diff < result) {
                         result = diff;
@@ -101,7 +99,6 @@ public class ThreadedMinimumPairwiseDistance implements MinimumPairwiseDistance 
             long result = Integer.MAX_VALUE;
             for (int i = values.length/2; i < values.length; ++i) {
                 for (int j = values.length/2; j < i; ++j) {
-                    // Gives us all the pairs (i, j) where 0 <= j < i < values.length
                     long diff = Math.abs(values[i] - values[j]);
                     if (diff < result) {
                         result = diff;
