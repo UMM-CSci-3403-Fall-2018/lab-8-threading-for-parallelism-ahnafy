@@ -1,10 +1,11 @@
 package mpd;
 
-import static org.junit.Assert.*;
+import org.junit.Test;
 
 import java.util.Random;
 
-import org.junit.Test;
+import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 
 public class ThreadTimingTest {
 
