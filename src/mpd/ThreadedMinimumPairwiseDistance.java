@@ -2,6 +2,7 @@ package mpd;
 
 public class ThreadedMinimumPairwiseDistance implements MinimumPairwiseDistance {
     private long globalResult = Integer.MAX_VALUE;
+
     @Override
     public long minimumPairwiseDistance(int[] values) {
         Thread[] threads = new Thread[4];
@@ -31,12 +32,14 @@ public class ThreadedMinimumPairwiseDistance implements MinimumPairwiseDistance 
         }
         return this.globalResult;
     }
+
     public void updateGlobalResult(long localResult){
         if(this.globalResult > localResult){
             this.globalResult = localResult;
         }
     }
-   public class LowerLeft implements Runnable{
+
+    public class LowerLeft implements Runnable{
         private int[] values;
         public LowerLeft(int[] values){
             this.values = values;
@@ -54,15 +57,17 @@ public class ThreadedMinimumPairwiseDistance implements MinimumPairwiseDistance 
             updateGlobalResult(result);
         }
     }
+
     public class LowerRight implements Runnable{
         private int[] values;
         public LowerRight(int[] values){
             this.values = values;
         }
+
         public void run(){
             long result = Integer.MAX_VALUE;
             for (int i = values.length/2; i < values.length; ++i) {
-                for (int j = values.length/2; j < i; ++j) {
+                for (int j = 0; j < i - (values.length/2); ++j) {
                     long diff = Math.abs(values[i] - values[j]);
                     if (diff < result) {
                         result = diff;
@@ -72,16 +77,18 @@ public class ThreadedMinimumPairwiseDistance implements MinimumPairwiseDistance 
             updateGlobalResult(result);
         }
     }
+
     public class Center implements Runnable{
         private int[] values;
         public Center(int[] values){
             this.values = values;
         }
+
         public void run(){
             long result = Integer.MAX_VALUE;
             for (int i = values.length/2; i < values.length; ++i) {
-                for (int j = values.length/2; j <= i; ++j) {
-                    long diff = Math.abs(values[j] - values[i]);
+                for (int j = i - (values.length/2); j < i; ++j) {
+                    long diff = Math.abs(values[i] - values[j]);
                     if (diff < result) {
                         result = diff;
                     }
@@ -90,11 +97,13 @@ public class ThreadedMinimumPairwiseDistance implements MinimumPairwiseDistance 
             updateGlobalResult(result);
         }
     }
+
     public class UpperRight implements Runnable{
         private int[] values;
         public UpperRight(int[] values){
             this.values = values;
         }
+
         public void run(){
             long result = Integer.MAX_VALUE;
             for (int i = values.length/2; i < values.length; ++i) {
